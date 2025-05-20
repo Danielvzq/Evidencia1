@@ -1,0 +1,3 @@
+C:/Users/Franc/CLionProjects/Actividad Integradora 1/cmake-build-debug/CMakeFiles/Actividad_Integradora_1.dir
+C:/Users/Franc/CLionProjects/Actividad Integradora 1/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/Franc/CLionProjects/Actividad Integradora 1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
