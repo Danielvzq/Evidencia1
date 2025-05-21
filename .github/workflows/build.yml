@@ -28,6 +28,11 @@ jobs:
           cd build
           cmake --build .
 
+      - name: Copy required input files
+        run: |
+          cp ../*.txt .
+        working-directory: build
+
       - name: Run Unit Tests
         run: |
           cd build
