@@ -24,7 +24,7 @@ pair<bool, size_t> containsPattern(const string &text, const string &pattern) {
     if (pattern.empty()) return {true, 1};  // Caso borde: patrón vacío siempre coincide
 
     size_t pos = text.find(pattern);
-    return (pos != string::npos) ? make_pair(true, pos + 1) : make_pair(false, 0);
+    return (pos != string::npos) ? make_pair(true, pos + 1) : make_pair(false, static_cast<size_t>(0));
 }
 
 // Encuentra el palíndromo más largo, devuelve posiciones 1-based [start, end]
