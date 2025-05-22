@@ -8,11 +8,22 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fprofile-arcs -ftest-cove
 
 enable_testing()
 
-# Ejecutable principal
+# Descargar GoogleTest si no está disponible
+include(FetchContent)
+FetchContent_Declare(
+  googletest
+  URL https://github.com/google/googletest/archive/refs/heads/main.zip
+)
+# Evitar instalar tests de GoogleTest para evitar warnings
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
+
 add_executable(Actividad_Integradora_1 main.cpp)
 
-# Ejecutable de pruebas unitarias
 add_executable(tests tests.cpp)
 
-# Registrar pruebas para ctest
+# Linkear GoogleTest al ejecutable tests
+target_link_libraries(tests gtest_main)
+
+# Registrar test para ctest
 add_test(NAME RunTests COMMAND tests)
