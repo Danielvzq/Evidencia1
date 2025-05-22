@@ -8,7 +8,11 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -fprofile-arcs -ftest-cove
 
 enable_testing()
 
+# Ejecutable principal
 add_executable(Actividad_Integradora_1 main.cpp)
-add_executable(tests tests.cpp) # Archivo de pruebas unitarias
 
+# Ejecutable de pruebas unitarias
+add_executable(tests tests.cpp)
+
+# Registrar pruebas para ctest
 add_test(NAME RunTests COMMAND tests)
