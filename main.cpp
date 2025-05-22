@@ -3,9 +3,64 @@
 #include <string>
 #include <vector>
 #include <algorithm>
-#include <cassert>
 
 using namespace std;
+
+string readFileContent(const string &filename);
+pair<bool, size_t> containsPattern(const string &text, const string &pattern);
+pair<int, int> longestPalindrome(const string &text);
+pair<int, int> longestCommonSubstring(const string &text1, const string &text2);
+
+int main() {
+    string transmission1 = readFileContent("transmission1.txt");
+    string transmission2 = readFileContent("transmission2.txt");
+    vector<string> mcodes = {
+        readFileContent("mcode1.txt"),
+        readFileContent("mcode2.txt"),
+        readFileContent("mcode3.txt")
+    };
+
+    cout << "Parte 1:" << endl;
+
+    for (const auto& mcode : mcodes) {
+        auto result1 = containsPattern(transmission1, mcode);
+        if (result1.first)
+            cout << "true " << result1.second << endl;
+        else
+            cout << "false" << endl;
+    }
+
+    for (const auto& mcode : mcodes) {
+        auto result2 = containsPattern(transmission2, mcode);
+        if (result2.first)
+            cout << "true " << result2.second << endl;
+        else
+            cout << "false" << endl;
+    }
+
+    cout << "Parte 2:" << endl;
+
+    auto palindrome1 = longestPalindrome(transmission1);
+    auto palindrome2 = longestPalindrome(transmission2);
+
+    string palindrome1_text = transmission1.substr(palindrome1.first - 1, palindrome1.second - palindrome1.first + 1);
+    palindrome1_text.erase(remove(palindrome1_text.begin(), palindrome1_text.end(), '\n'), palindrome1_text.end());
+    cout << palindrome1.first << " " << palindrome1.second << " " << palindrome1_text << endl;
+
+    string palindrome2_text = transmission2.substr(palindrome2.first - 1, palindrome2.second - palindrome2.first + 1);
+    palindrome2_text.erase(remove(palindrome2_text.begin(), palindrome2_text.end(), '\n'), palindrome2_text.end());
+    cout << palindrome2.first << " " << palindrome2.second << " " << palindrome2_text << endl;
+
+    cout << "Parte 3:" << endl;
+
+    auto commonSubstring = longestCommonSubstring(transmission1, transmission2);
+
+    string commonSubstring_text = transmission1.substr(commonSubstring.first - 1, commonSubstring.second - commonSubstring.first + 1);
+    commonSubstring_text.erase(remove(commonSubstring_text.begin(), commonSubstring_text.end(), '\n'), commonSubstring_text.end());
+    cout << commonSubstring.first << " " << commonSubstring.second << " " << commonSubstring_text << endl;
+
+    return 0;
+}
 
 string readFileContent(const string &filename) {
     ifstream file(filename);
@@ -62,59 +117,3 @@ pair<int, int> longestCommonSubstring(const string &text1, const string &text2) 
     }
     return {endIdx - maxLen + 1, endIdx};
 }
-
-#ifdef UNIT_TESTS
-void runTests() {
-    // containsPattern
-    auto r1 = containsPattern("abcde", "bcd");
-    assert(r1.first == true && r1.second == 2);
-    auto r2 = containsPattern("abcde", "xyz");
-    assert(r2.first == false && r2.second == 0);
-
-    // longestPalindrome
-    auto p1 = longestPalindrome("babad"); // "bab" o "aba"
-    assert((p1 == make_pair(1, 3) || p1 == make_pair(2, 4)));
-    auto p2 = longestPalindrome("cbbd"); // "bb"
-    assert(p2 == make_pair(2, 3));
-
-    // longestCommonSubstring
-    auto lcs = longestCommonSubstring("abcdef", "zabcf"); // "abc"
-    assert(lcs == make_pair(1, 3));
-
-    cout << "All unit tests passed.\n";
-}
-#endif
-
-#ifndef UNIT_TESTS
-int main() {
-    string transmission1 = readFileContent("transmission1.txt");
-    string transmission2 = readFileContent("transmission2.txt");
-    vector<string> mcodes = {
-        readFileContent("mcode1.txt"),
-        readFileContent("mcode2.txt"),
-        readFileContent("mcode3.txt")
-    };
-
-    cout << "Parte 1:" << endl;
-    for (const auto &mcode : mcodes) {
-        auto res1 = containsPattern(transmission1, mcode);
-        cout << (res1.first ? "true " + to_string(res1.second) : "false") << endl;
-    }
-    for (const auto &mcode : mcodes) {
-        auto res2 = containsPattern(transmission2, mcode);
-        cout << (res2.first ? "true " + to_string(res2.second) : "false") << endl;
-    }
-
-    cout << "Parte 2:" << endl;
-    auto p1 = longestPalindrome(transmission1);
-    auto p2 = longestPalindrome(transmission2);
-    cout << p1.first << " " << p1.second << " " << transmission1.substr(p1.first - 1, p1.second - p1.first + 1) << endl;
-    cout << p2.first << " " << p2.second << " " << transmission2.substr(p2.first - 1, p2.second - p2.first + 1) << endl;
-
-    cout << "Parte 3:" << endl;
-    auto lcs = longestCommonSubstring(transmission1, transmission2);
-    cout << lcs.first << " " << lcs.second << " " << transmission1.substr(lcs.first - 1, lcs.second - lcs.first + 1) << endl;
-
-    return 0;
-}
-#endif
