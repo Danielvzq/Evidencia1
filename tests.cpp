@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
-#include "../transmission_utils.h"
-#include "../transmission_impl.h"
+#include "transmission_utils.h"
+#include "transmission_impl.h"
 
 TEST(PatternTest, Found) {
     std::string t = "ABCDEF";
